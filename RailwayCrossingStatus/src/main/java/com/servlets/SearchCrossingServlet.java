@@ -1,0 +1,57 @@
+package com.servlets;
+
+import java.io.IOException;
+import java.util.List;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.entity.RailwayCrossing;
+import com.operations.AdminOperations;
+
+/**
+ * Servlet implementation class SearchCrossingServlet
+ */
+@WebServlet("/SearchCrossingServlet")
+public class SearchCrossingServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public SearchCrossingServlet() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		response.getWriter().append("Served at: ").append(request.getContextPath());
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+//		 String searchQuery = request.getParameter("searchQuery");
+
+		 String searchQuery = request.getParameter("crossingName");
+		 System.out.println("Search Query: " + searchQuery);
+
+	        AdminOperations adminOperations = new AdminOperations();
+	        List<RailwayCrossing> searchResults = adminOperations.searchCrossingByName(searchQuery);
+
+	        request.setAttribute("searchResults", searchResults);
+	        RequestDispatcher dispatcher = request.getRequestDispatcher("searchResults.jsp");
+	        dispatcher.forward(request, response);
+	}
+
+}
