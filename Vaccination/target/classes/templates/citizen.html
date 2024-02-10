@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Citizen List</title>
+</head>
+<body>
+    <h2>Citizen List</h2>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>City</th>
+                <th>No. of Dose</th>
+                <th>Vaccination Status</th>
+                <th>Vaccine Center</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="citizen : ${citizens}">
+                <td th:text="${citizen.id}"></td>
+                <td th:text="${citizen.name}"></td>
+                <td th:text="${citizen.vaccineCenter.city}"></td>
+                <td th:text="${citizen.noOfDose}"></td>
+                <td th:text="${citizen.noOfDose == 0 ? 'Not Vaccinated' : (citizen.noOfDose == 1 ? 'One Dose Completed' : 'Fully Vaccinated')}"></td>
+                <td th:text="${citizen.vaccineCenter.name}"></td>
+                <td>
+                    <a th:href="@{/citizens/{id}(id=${citizen.id})}">View</a>
+                    <a th:href="@{/citizens/{id}/edit(id=${citizen.id})}">Edit</a>
+                    <a th:href="@{/citizens/{id}/delete(id=${citizen.id})}">Delete</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
